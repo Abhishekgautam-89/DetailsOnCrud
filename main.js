@@ -69,6 +69,8 @@ function showDataOnScreen(user){
     edit.addEventListener('click', ()=>{
         document.getElementById('name').value=user.name;
         document.getElementById('email').value = user.email;
+        document.getElementById('phone').value=user.phone;
+        axios.delete(`https://crudcrud.com/api/0396a80113214cd0bf591cc591e6ec02/test-case/${user._id}`)
         li.remove();
     });
     const del = document.createElement('input');
