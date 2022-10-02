@@ -1,12 +1,25 @@
 var submit = document.getElementById('submit');
 const list = document.getElementById('users');
 
-    addEventListener('DOMContentLoaded', (e)=>{
-        Object.keys(localStorage).forEach((key)=>{
-            var detailsOfPeople = JSON.parse(localStorage.getItem(key));
-            showDataOnScreen(detailsOfPeople);
-            }
-        );  
+    window.addEventListener("DOMContentLoaded", ()=>{
+        // Object.keys(localStorage).forEach((key)=>{
+        //     var detailsOfPeople = JSON.parse(localStorage.getItem(key));
+        //     showDataOnScreen(detailsOfPeople);
+        //     }
+        // );  
+
+        
+        axios.get("https://crudcrud.com/api/0396a80113214cd0bf591cc591e6ec02/test-case")
+        .then((resolve)=>{
+            for (var i=0; i<resolve.data.length;i++){
+                showDataOnScreen(resolve.data[i]);                
+                }                
+            
+            // console.log(resolve)
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
     })
 
    
@@ -26,9 +39,9 @@ phone
 };
 var objConverted = JSON.stringify(obj);
 
-axios.post("https://crudcrud.com/api/82f1ea9b35da4bffaab4600b6a3bc345/test-case", obj)
+axios.post("https://crudcrud.com/api/0396a80113214cd0bf591cc591e6ec02/test-case", obj)
 .then((response)=>{
-    console.log(response);
+    console.log(response.data);
 })
 .catch((error)=>{
     console.log("Something gone wrong")
@@ -43,10 +56,10 @@ function showDataOnScreen(user){
         removeUserFromScreen(user.email);
 
     }
-
+    // console.log(user);
     const li = document.createElement('li');
-    li.id = user.email;
-    li.appendChild(document.createTextNode(user.name+' '+user.email));
+    li.id = user._id;
+    li.appendChild(document.createTextNode(user.name+'- '+user.email));
     list.appendChild(li);
     const edit = document.createElement('input');
     edit.id ='edit';
@@ -63,14 +76,15 @@ function showDataOnScreen(user){
     del.value='Delete';
     del.type='button';
     del.addEventListener('click', ()=>{
-        localStorage.removeItem(user.email);
-       li.remove(); 
+        
+        // localStorage.removeItem(user.email);
+    //    li.remove(); 
     });
     li.appendChild(del);
 }
 
 function removeUserFromScreen(emailId){
-    console.log(emailId);
+    // console.log(emailId);
     const childNode = document.getElementById(emailId);
     if(childNode){
         list.removeChild(childNode);
