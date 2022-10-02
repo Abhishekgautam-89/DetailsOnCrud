@@ -76,9 +76,10 @@ function showDataOnScreen(user){
     del.value='Delete';
     del.type='button';
     del.addEventListener('click', ()=>{
+        axios.delete(`https://crudcrud.com/api/0396a80113214cd0bf591cc591e6ec02/test-case/${user._id}`)
         
         // localStorage.removeItem(user.email);
-    //    li.remove(); 
+       li.remove(); 
     });
     li.appendChild(del);
 }
