@@ -9,13 +9,14 @@ const list = document.getElementById('users');
         // );  
 
         
-        axios.get("https://crudcrud.com/api/0396a80113214cd0bf591cc591e6ec02/test-case")
+        const details = axios.get("http://localhost:3000/user")
         .then((resolve)=>{
-            for (var i=0; i<resolve.data.length;i++){
-                showDataOnScreen(resolve.data[i]);                
+            for (var i=0; i<resolve.data.allUser.length;i++){
+                // console.log(resolve.data)
+                showDataOnScreen(resolve.data.allUser[i]);                
                 }                
             
-            // console.log(resolve)
+            // console.log(resolve.data.allUser)
         })
         .catch((error)=>{
             console.log(error);
@@ -39,7 +40,7 @@ phone
 };
 var objConverted = JSON.stringify(obj);
 
-axios.post("https://crudcrud.com/api/0396a80113214cd0bf591cc591e6ec02/test-case", obj)
+axios.post("http://localhost:3000/user", obj)
 .then((response)=>{
     console.log(response.data);
 })
@@ -56,9 +57,9 @@ function showDataOnScreen(user){
         removeUserFromScreen(user.email);
 
     }
-    // console.log(user);
+    console.log(user);
     const li = document.createElement('li');
-    li.id = user._id;
+    li.id = user.id;
     li.appendChild(document.createTextNode(user.name+'- '+user.email));
     list.appendChild(li);
     const edit = document.createElement('input');
@@ -70,7 +71,7 @@ function showDataOnScreen(user){
         document.getElementById('name').value=user.name;
         document.getElementById('email').value = user.email;
         document.getElementById('phone').value=user.phone;
-        axios.delete(`https://crudcrud.com/api/0396a80113214cd0bf591cc591e6ec02/test-case/${user._id}`)
+        axios.delete(`http://localhost:3000/user/delete/${user.id}`)
         li.remove();
     });
     const del = document.createElement('input');
@@ -78,7 +79,7 @@ function showDataOnScreen(user){
     del.value='Delete';
     del.type='button';
     del.addEventListener('click', ()=>{
-        axios.delete(`https://crudcrud.com/api/0396a80113214cd0bf591cc591e6ec02/test-case/${user._id}`)
+        axios.delete(`http://localhost:3000/user/delete/${user.id}`)
         
         // localStorage.removeItem(user.email);
        li.remove(); 
